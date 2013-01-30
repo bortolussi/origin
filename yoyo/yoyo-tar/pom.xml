@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.francetelecom.yoyo</groupId>
+		<artifactId>yoyo</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	
+	<artifactId>yoyo-tar</artifactId>
+	<packaging>jar</packaging>
+	<name>${project.artifactId}(${project.packaging})</name>
+
+	<properties>
+		<!-- Change these properties to build correct signature files -->
+		<basicat>00A</basicat>
+		<goroco>G01R00C00</goroco>
+		<pl>00AEAR</pl>
+		
+		<pl.sig>PA-${basicat}-${pl}-${goroco}.SIG</pl.sig>
+		<app.sig>A-${basicat}-${goroco}.SIG</app.sig>
+		<!-- Build timestamp - Available since Maven 2.1M1 =>  ${maven.build.timestamp} -->
+		<maven.build.timestamp.format>yyyyMMdd_HHmm</maven.build.timestamp.format>
+		<package.tar>PL_${pl}_${goroco}_${maven.build.timestamp}</package.tar>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-ear</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+			<type>ear</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<!-- create signatures -->
+						<configuration>
+							<target>
+								<touch file="src/main/resources/${pl.sig}" />
+								<touch file="src/main/resources/${app.sig}" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.2</version>
+				<configuration>
+					<!-- Build package tar -->
+					<!-- final name=PL_52KINT_G04R01C04.tar.gz -->
+					<finalName>${package.tar}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/main/assembly/build-package.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-package</id> <!-- this is used for inheritance merges -->
+						<phase>install</phase> <!-- append to the packaging phase. -->
+						<goals>
+							<goal>single</goal> <!-- goals == mojos -->
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

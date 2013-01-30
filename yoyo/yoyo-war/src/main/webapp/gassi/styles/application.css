@@ -1,0 +1,325 @@
+/* ---------------------------------------------------------------------------------- */
+/* Default styles */
+/* ---------------------------------------------------------------------------------- */
+
+body {font-family: Arial;}
+
+strong {font-weight: bold;}
+
+h1,h2,h3,h4 {font-weight:bold;}
+
+h1 {font-size:1.5em;}
+
+h2 {font-size:1.4em;}
+
+h3 {font-size:1.2em;}
+
+img {border:none;vertical-align: middle;}
+
+.spacer {clear:both;}
+
+.hidden {
+text-indent:-3000px;
+display:none;
+}
+
+/* ---------------------------------------------------------------------------------- */
+/* Link styles */
+/* ---------------------------------------------------------------------------------- */
+
+a {
+color:rgb(245,102,0);
+text-decoration:none;
+}
+
+a:hover {
+color:rgb(245,102,0);
+text-decoration:underline;
+}
+
+/* ---------------------------------------------------------------------------------- */
+/* application layout */
+/* ---------------------------------------------------------------------------------- */
+
+.site {
+background:#FFFFFF none repeat scroll 0%;
+border:0pt none;
+font-size:90%;
+margin:5px;
+padding:0pt;
+width:64em;
+}
+
+/* header container */
+.site .containerHeader {
+float:left;
+width:100%;
+}
+
+/* content container */
+.site .contentContainer {
+clear:both;
+float:left;
+width:100%;
+margin:1em 0em 0pt 0em;
+position:relative;
+}
+
+/* footer container */
+.site .containerFooter {
+clear:both;
+float:left;
+width:100%;
+border-top:2px solid rgb(245,102,0);
+}
+
+
+/* ---------------------------------------------------------------------------------- */
+/* Header styles */
+/* ---------------------------------------------------------------------------------- */
+
+.header {
+background-image:url(../images/logoOrange.gif);
+background-repeat:no-repeat;
+background-position: left center;
+padding-bottom:10px;
+float:left;
+text-align:left;
+margin:10px;
+/* 99% because 100% gives horizontal scrollbar */
+width:99%;
+}
+
+.header h1 {
+ color:#ccc;
+ padding-left: 90px;
+ padding-top: 12px;
+ float: left;
+}
+
+/* ---------------------------------------------------------------------------------- */
+/* Content styles */
+/* ---------------------------------------------------------------------------------- */
+
+.content {
+position:relative;
+width:100%;
+text-align:left;
+margin-bottom:1em;
+}
+
+.content h2 {
+background-image:url(../images/gradingGrey.png);
+background-repeat:repeat-x;
+padding:10px 0px 5px 9px;
+color:#444;
+}
+
+.content p {
+text-indent:1em;
+}
+
+/* new content block */
+.block {
+margin:1em auto 1em auto;
+text-align:left;
+width:80%;
+clear:both;
+}
+
+.block h3 {
+padding-left: 5px;
+padding-top: 3px;
+height:1.5em;
+background-color: transparent;
+font-weight:normal;
+text-indent:8px;
+}
+
+.center {
+clear:both;
+margin:0.5em auto 0em auto;
+text-align: center;
+}
+
+.errors {
+color:#f00;
+}
+
+/**
+ formHeader, formLeft, formBody, formFooter,formFooter, formFooterLeft
+ are used to create frames  with header, content and footer parts, with round corners.
+
+Example :
+
+<div class="formHeader">
+   <div class="formLeft">text</div>
+</div>
+<div class="formBody">
+     text
+</div>
+<div class="formFooterLeft">
+  <div class="formFooter">text</div>
+</div>
+
+with orange color :
+
+<div class="formHeader orangeHeader">
+   <div class="formLeft">text</div>
+</div>
+<div class="formBody orangeBody">
+     text
+</div>
+<div class="formFooterLeft orangeFooter">
+  <div class="formFooter">text</div>
+</div>
+
+*/
+
+.formHeader {
+background-image:url(../images/formHeader.png);
+background-repeat:repeat-x;
+background-position:bottom;
+background-color:#f6f6f6;
+border-left:1px solid #ccc;
+border-top:1px solid #ccc;
+border-right:1px solid #ccc;
+}
+
+.formBody h3, .formBody h4 {
+text-indent:12px;
+padding-top:8px;
+}
+
+.formHeader .center {
+margin:0em auto 0em auto;
+}
+
+.formHeader label {
+margin-top:0em;
+margin-bottom:0em;
+float:none;
+font-size:1.1em;
+font-weight:bold;
+}
+
+.formLeft {
+background-image:url(../images/formLeft.png);
+background-repeat:no-repeat;
+background-position:left bottom;
+text-indent:8px;
+}
+
+.formBody {
+background-color:#fff;
+border-right:1px solid #ccc;
+border-left:1px solid #ccc;
+
+}
+
+.formBody .center {
+margin:0em auto 0em auto;
+}
+
+.formBody p {
+ padding-top:0em;
+}
+
+.formFooter {
+background-color:#fff;
+border-bottom:1px solid #ccc;
+height:15px;
+}
+
+
+.formFooterLeft {
+background-image:url(../images/formFooterLeft.png);
+background-repeat:no-repeat;
+background-position:left bottom;
+background-color:#fff;
+border-right:1px solid #ccc;
+padding-left:5px;
+}
+
+
+.formFooterLeft .center {
+margin:0em auto 0em auto;
+}
+
+.formBody p {
+padding:0.3em;
+}
+
+
+/* ---------------------------------------------------------------------*/
+/* Form styles */
+/* ---------------------------------------------------------------------*/
+
+.input {
+padding:0.5em;
+}
+
+.required label span {
+ font-weight:bold;
+ color:#f00;
+ padding: 3px;
+}
+
+label {
+display:block;
+float:left;
+width:10em;
+padding:0.2em 0.3em;
+clear:both;
+}
+
+.button {
+background-image: url(../images/buttonBg.gif);
+background-repeat: no-repeat;
+background-position: center center;
+border:none;
+background-color:rgb(245,102,0);
+color:#fff;
+text-indent:0px;
+width:6.8em;
+min-width:6.8em;
+height:26px;
+min-height:26px;
+cursor:pointer;
+font-weight:bold;
+}
+
+/* ---------------------------------------------------------------------*/
+/* footer style */
+/* ---------------------------------------------------------------------*/
+
+.footer {
+ margin:10px;
+}
+
+.footer .copy {
+background-image:url(../images/logoFT.gif);
+background-repeat:no-repeat;
+background-position: left center;
+text-indent:30px;
+padding-top:20px;
+padding-bottom:15px;
+float:left;
+text-align:left;
+width:auto;
+}
+
+.footer .user {
+float:left;
+width:auto;
+padding-left: 90px;
+text-align:left;
+}
+
+.footer .version {
+padding-top:20px;
+float:right;
+text-align:left;
+width:auto;
+}
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<access
+	xmlns="http://com.francetelecom.clara.security" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://com.francetelecom.clara.security access.xsd">
+	
+	<realms>
+		<!--
+			This realm contains URI resources.
+			It's name might be changed, but path must be
+			left to "URI::/" if you want the SecurityFilter
+			to protect urls.
+		-->
+		<realm name="web" path="URI::/web/">
+			<resource name="adm" criteria="adm\S*"/>
+			<resource name="app" criteria="app\S*"/>
+		</realm>
+	</realms>
+	
+	<roles>
+		<!--
+			This role gives access to the whole application.
+		-->
+		<role name="administrateur">
+			<allow-realm name="web"/>
+		</role>
+
+		<!--
+			This role gives access to all actions but deletion ones, only
+			uppon "standard" customers (normal customers or bad payers).
+		-->
+		<role name="utilisateur">
+			<allow-resource name="app"/>
+		</role>
+	</roles>
+</access>

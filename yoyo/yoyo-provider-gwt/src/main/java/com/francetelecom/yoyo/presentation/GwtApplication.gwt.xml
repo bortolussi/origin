@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<!-- Inherit the core Web Toolkit stuff. -->
+	<inherits name='com.google.gwt.activity.Activity' />
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name="com.google.gwt.i18n.I18N" />
+	<!-- Inherit other modules. -->
+	<!-- holds RPC service beans which are exchanged -->
+	<inherits name="com.francetelecom.yoyo.model.Model" />
+	<!-- holds RPC service interface -->
+	<inherits name="com.francetelecom.yoyo.application.Application" />
+	<inherits
+		name="com.francetelecom.yoyo.technicalservice.exception.Exception" />
+	<!-- holds clara gwt widgets -->
+	<inherits name="com.orange.gwt.clara.Clara" />
+
+
+	<extend-property name="locale" values="fr" />
+	<extend-property name="locale" values="en" />
+
+	<!-- Specify the app entry point class. -->
+	<entry-point
+		class='com.francetelecom.yoyo.presentation.client.GwtApplication' />
+
+
+	<!-- CSS stylesheet to use in the application -->
+	<!-- stylesheet src="styles/application.css" / -->
+
+
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+	<source path='shared' />
+	
+</module>

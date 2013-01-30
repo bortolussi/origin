@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema targetNamespace="http://com.francetelecom.clara.security"
+	xmlns:tns="http://com.francetelecom.clara.security"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+    <xs:element name="security-config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tns:agent"/>
+                <xs:element ref="tns:users"/>
+                <xs:element ref="tns:auditers"/>
+                <xs:element ref="tns:ipFilter"/>
+                <xs:element ref="tns:web-app"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="agent">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:set-property"/>
+            </xs:sequence>
+            <xs:attribute name="class" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="set-property">
+        <xs:complexType>
+            <xs:attribute name="property" use="required" type="xs:string"/>
+            <xs:attribute name="value" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="users">        
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:required-property"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="required-property">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="auditers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:auditer"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="auditer">
+        <xs:complexType>
+            <xs:attribute name="class" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ipFilter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:allowedIP"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="allowedIP">
+        <xs:complexType>
+            <xs:attribute name="pattern" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="web-app">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="tns:entry-points"/>
+                <xs:element minOccurs="0" ref="tns:error-forwards"/>
+                <xs:element minOccurs="0" ref="tns:exit-points"/>
+                <xs:element minOccurs="0" ref="tns:ignored-extentions"/>
+            </xs:sequence>
+            <xs:attribute name="badLoginMessage" />
+            <xs:attribute name="login"/>
+            <xs:attribute name="protectActions" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="entry-points">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tns:entry-point"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="entry-point">
+        <xs:complexType>
+            <xs:attribute name="forward"/>
+            <xs:attribute name="path" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="error-forwards">
+        <xs:complexType>
+            <xs:attribute name="authentication" />
+            <xs:attribute name="authorization" />
+            <xs:attribute name="failure" use="required"/>
+            <xs:attribute name="notAnEntryPoint"  use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="exit-points">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:exit-point"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="exit-point">
+        <xs:complexType>
+            <xs:attribute name="path" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ignored-extentions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:ignored-extention"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ignored-extention">
+        <xs:complexType>
+            <xs:attribute name="extention" use="required" type="xs:NCName"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

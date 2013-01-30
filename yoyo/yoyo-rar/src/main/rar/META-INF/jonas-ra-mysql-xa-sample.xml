@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jonas-connector xmlns="http://www.objectweb.org/jonas/ns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.objectweb.org/jonas/ns
+ http://www.objectweb.org/jonas/ns/jonas-connector_4_4.xsd">
+	<!-- Mysql XA rar sample -->
+	<!-- rename to jonas-ra.xml and modify parameters according to your database -->
+
+	<jndi-name>jdbc/yoyoDataSource</jndi-name>
+	<rarlink>JOnASJDBC_XA</rarlink>
+	<log-enabled>false</log-enabled>
+	<log-topic></log-topic>
+	<pool-params>
+		<pool-init>1</pool-init>
+		<pool-min>2</pool-min>
+		<pool-max>10</pool-max>
+		<pool-max-age-minutes>1440</pool-max-age-minutes>
+		<pstmt-max>10</pstmt-max>
+		<pool-max-opentime>60</pool-max-opentime>
+		<pool-max-waiters>100</pool-max-waiters>
+		<pool-max-waittime>5</pool-max-waittime>
+		<pool-sampling-period>30</pool-sampling-period>
+	</pool-params>
+
+	<jdbc-conn-params>
+		<jdbc-check-level>0</jdbc-check-level>
+		<jdbc-test-statement></jdbc-test-statement>
+	</jdbc-conn-params>
+
+	<jonas-config-property>
+		<jonas-config-property-name>dsClass</jonas-config-property-name>
+		<jonas-config-property-value>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>user</jonas-config-property-name>
+		<jonas-config-property-value>root</jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>password</jonas-config-property-name>
+		<jonas-config-property-value></jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>databaseName</jonas-config-property-name>
+		<jonas-config-property-value>database_sample</jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>description</jonas-config-property-name>
+		<jonas-config-property-value></jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>portNumber</jonas-config-property-name>
+		<jonas-config-property-value></jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>serverName</jonas-config-property-name>
+		<jonas-config-property-value>localhost</jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>loginTimeout</jonas-config-property-name>
+		<jonas-config-property-value></jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>dbSpecificMethods</jonas-config-property-name>
+		<jonas-config-property-value></jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>isolationLevel</jonas-config-property-name>
+		<jonas-config-property-value></jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>mapperName</jonas-config-property-name>
+		<jonas-config-property-value>rdb.mysql</jonas-config-property-value>
+	</jonas-config-property>
+	<jonas-config-property>
+		<jonas-config-property-name>logTopic</jonas-config-property-name>
+		<jonas-config-property-value></jonas-config-property-value>
+	</jonas-config-property>
+</jonas-connector>
+

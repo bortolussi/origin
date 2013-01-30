@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+	targetNamespace="http://com.francetelecom.clara.security"
+	xmlns:tns="http://com.francetelecom.clara.security"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	
+    <xs:element name="access">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tns:realms"/>
+                <xs:element ref="tns:roles"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="realms">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:realm"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="realm">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:resource" />
+            </xs:sequence>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+            <xs:attribute name="path" use="required" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="resource">
+        <xs:complexType>
+            <xs:attribute name="criteria" use="required"/>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="roles">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:role"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="role">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:allow-realm"/>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="tns:allow-resource"/>
+            </xs:sequence>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="allow-realm">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="allow-resource">
+        <xs:complexType>
+            <xs:attribute name="name" use="required" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

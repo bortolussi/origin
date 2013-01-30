@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.francetelecom.maven</groupId>
+		<artifactId>pom-corporate</artifactId>
+		<version>3.0</version>
+	</parent>
+
+	<groupId>com.francetelecom.yoyo</groupId>
+	<artifactId>yoyo</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>${project.artifactId}(${project.packaging})</name>
+	<url>http://${project.artifactId}.orangeforge.rd.francetelecom.fr/website/${project.artifactId}-${project.version}</url>
+
+	<properties>
+		<!-- jonas 5.x/java6 is the standard platform -->
+		<jonas.version>jonas5x</jonas.version>
+		<java.version>1.6</java.version>
+
+		<!-- main frameworks versions -->
+		<spring.version>3.1.0.RELEASE</spring.version>
+		<gwt.version>2.2.0</gwt.version>
+		<gwt.plugin.version>2.2.0</gwt.plugin.version>
+		<hibernate.jpa.version>3.6.0.Final</hibernate.jpa.version>
+		<slf4j.version>1.6.4</slf4j.version>
+
+		<!-- default values for local deployment, could be overridden by a profile (see DEV example) -->
+		<config.jonasJmxServer>localhost</config.jonasJmxServer>
+		<config.jonasJmxPort>1099</config.jonasJmxPort>
+		<config.cargoRemoteUsername>jonas</config.cargoRemoteUsername>
+		<config.cargoRemotePassword>jonas</config.cargoRemotePassword>
+		<config.cargoJonasDomainName>jonas</config.cargoJonasDomainName>
+		<config.cargoJonasServerName>jonas</config.cargoJonasServerName>
+
+		<project.build.sourceEncoding>ISO-8859-15</project.build.sourceEncoding>
+
+		<!-- useful variable -->
+	    <build.timestamp>${maven.build.timestamp}</build.timestamp>
+	    <maven.build.timestamp.format>dd/MM/yyyy - HH:mm:ss</maven.build.timestamp.format>
+	</properties>
+
+	<organization>
+		<name>France Telecom - DSIG</name>
+		<url>http://devteam.itn.ftgroup/index.php</url>
+	</organization>
+
+	<issueManagement>
+		<system>Sonar</system>
+		<url>http://xxxxxx.intranet-paris.francetelecom.fr:9200/sonar/</url>
+	</issueManagement>
+
+	<ciManagement>
+		<system>Hudson</system>
+		<url>http://xxxxxx.intranet-paris.francetelecom.fr:9200/hudson/</url>
+	</ciManagement>
+
+	<scm>
+		<connection>scm:svn:https://orangeforge.rd.francetelecom.fr/svnroot/${project.artifactId}/trunk</connection>
+		<developerConnection>scm:svn:https://orangeforge.rd.francetelecom.fr/svnroot/${project.artifactId}/trunk</developerConnection>
+	</scm>
+
+
+	<!-- Site deployment -->
+	<distributionManagement>
+		<site>
+			<id>codendi</id>
+			<name>${project.artifactId} Web Site</name>
+			<url>sftp://orangeforge.rd.francetelecom.fr/home/groups/${project.artifactId}/htdocs/website/${project.artifactId}-${project.version}</url>
+		</site>
+	</distributionManagement>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- ===================== -->
+			<!-- application libraries -->
+			<!-- ===================== -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-technicalservice</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-model</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<!-- used by GWT to generate javascript client code -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-model</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<type>java-source</type>
+			</dependency>
+
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-application</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<!-- used by GWT to generate javascript client code -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-application</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<type>java-source</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-business</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-consumer-jpa</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-provider-gwt</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-war</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>yoyo-ear</artifactId>
+				<version>1.0.0-SNAPSHOT</version>
+				<type>ear</type>
+			</dependency>
+
+
+			<!-- =================== -->
+			<!-- framework libraries -->
+			<!-- =================== -->
+
+			<!-- ******************* -->
+			<!-- Spring dependencies -->
+			<!-- ******************* -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- spring-aop only needed in runtime -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<!-- spring-tx includes transaction, JCA, DAO -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- spring-jdbc includes commons-exceptions, datasource management -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- spring-orm includes Hibernate and JPA support -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<!-- spring-test only used with junit tests -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- **************** -->
+			<!-- GWT dependencies -->
+			<!-- **************** -->
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-servlet</artifactId>
+				<version>${gwt.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.gwt</groupId>
+				<artifactId>gwt-user</artifactId>
+				<version>${gwt.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- GWT clara widgets dependencies -->
+			<dependency>
+				<groupId>com.francetelecom.clara.ria.gwt</groupId>
+				<artifactId>gwt-clara</artifactId>
+				<version>1.2.1</version>
+				<type>jar</type>
+			</dependency>
+
+			<!-- ****************** -->
+			<!-- Gassi mock library -->
+			<!-- ****************** -->
+			<dependency>
+				<groupId>com.francetelecom.clara.component</groupId>
+				<artifactId>security</artifactId>
+				<version>3.1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>1.6</version>
+			</dependency>
+			<!-- gassi jsp example uses jstl tags -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+				<!-- scope>provided</scope -->
+			</dependency>
+
+			<!-- ************************ -->
+			<!-- Hibernate JPA dependency -->
+			<!-- ************************ -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.jpa.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache-core</artifactId>
+				<version>2.4.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>1.0.0.GA</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>4.1.0.Final</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<!-- JPA 2.0 specification -->
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.0-api</artifactId>
+				<version>1.0.0.Final</version>
+			</dependency>
+
+			<!-- this library is scoped as provided to exclude it from war because it is already available in JRE 1.6 rt.jar file and avoid jonas error "Could not obtain 
+				JOTM transaction manager instance" -->
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+				<version>1.1</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Example of jdbc driver to use for real projects -->
+			<!-- 
+			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>ojdbc14</artifactId>
+				<version>10.2.0.2.0</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.0.7</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>8.4-702.jdbc4</version>
+				<scope>test</scope>
+			</dependency>
+			-->
+			<!-- hsqldb driver used for unit tests -->
+			<dependency>
+				<groupId>hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>1.8.0.1</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- ******************** -->
+			<!-- Logging dependencies -->
+			<!-- ******************** -->
+			<!-- slf4j + logback + commons logging (JCL) and log4j bridges -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>log4j-over-slf4j</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- test dependencies are defined for all sub modules -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.4.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.3.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.3.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-rar-plugin</artifactId>
+					<version>2.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.3.2</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>gwt-maven-plugin</artifactId>
+					<version>${gwt.plugin.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.11</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.1.1</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>2.4</version>
+					<!-- build fail if bad dependency management -->
+					<executions>
+						<execution>
+							<goals>
+								<goal>analyze-dep-mgt</goal>
+							</goals>
+							<phase>verify</phase>
+							<configuration>
+								<failBuild>true</failBuild>
+								<ignoreDirect>false</ignoreDirect>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ear-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<version>5</version>
+					</configuration>
+				</plugin>
+
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.5</version>
+					<executions>
+						<execution>
+							<id>copy-gwt-sources</id>
+							<phase>process-resources</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>target/classes</outputDirectory>
+								<resources>
+									<!-- used by GWT to generate javascript client code -->
+									<resource>
+										<directory>src/main/java</directory>
+										<includes>
+											<include>**/exception/*.java</include>
+											<include>**/application/*.java</include>
+											<include>**/model/*.java</include>
+										</includes>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+					<configuration>
+						<!-- required on continuous integration platform -->
+						<encoding>ISO-8859-15</encoding>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>2.8</version>
+					<configuration>
+						<downloadSources>true</downloadSources>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.0</version>
+					<configuration>
+						<inputEncoding>ISO-8859-15</inputEncoding>
+						<outputEncoding>UTF-8</outputEncoding>
+					</configuration>
+				</plugin>
+
+				<!-- This definition is used to generate standalone javadocs -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.8</version>
+					<configuration>
+						<encoding>ISO-8859-15</encoding>
+						<javadocVersion>1.5</javadocVersion>
+					</configuration>
+					<executions>
+						<execution>
+							<id>aggregate</id>
+							<goals>
+								<goal>aggregate</goal>
+							</goals>
+							<phase>site</phase>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.cargo</groupId>
+					<artifactId>cargo-maven2-plugin</artifactId>
+					<version>1.1.4</version>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-war-plugin</artifactId>
+										<versionRange>[2.1.1,)</versionRange>
+										<goals>
+											<goal>exploded</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore/>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<reporting>
+		<plugins>
+			<!-- This definition is used to generate javadocs during site generation -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8</version>
+				<configuration>
+					<encoding>ISO-8859-15</encoding>
+					<javadocVersion>1.6</javadocVersion>
+					<stylesheet>maven</stylesheet>
+					<detectLinks>false</detectLinks>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<id>non-aggregate</id>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+					<reportSet>
+						<id>aggregate</id>
+						<reports>
+							<report>aggregate</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<profiles>
+		<!-- example. Choose this profile for remote deployment on linux development platform -->
+		<profile>
+			<id>dev</id>
+			<!-- choose this profile for remote deployment on linux development platform -->
+			<activation>
+			</activation>
+			<properties>
+				<config.jonasJmxServer>xxxxxx.intranet-paris.francetelecom.fr</config.jonasJmxServer>
+				<config.jonasJmxPort>1099</config.jonasJmxPort>
+				<config.cargoRemoteUsername>jonas</config.cargoRemoteUsername>
+				<config.cargoRemotePassword>jonas</config.cargoRemotePassword>
+				<config.cargoJonasDomainName>jonas5xxxwas</config.cargoJonasDomainName>
+				<config.cargoJonasServerName>jonas5xxxwas</config.cargoJonasServerName>
+			</properties>
+		</profile>
+
+	</profiles>
+
+
+  <modules>
+    <module>yoyo-technicalservice</module>
+    <module>yoyo-model</module>
+    <module>yoyo-application</module>
+    <module>yoyo-business</module>
+    <module>yoyo-sql</module>
+    <module>yoyo-consumer-jpa</module>
+    <module>yoyo-provider-gwt</module>
+    <module>yoyo-rar</module>
+    <module>yoyo-war</module>
+    <module>yoyo-ear</module>
+    <module>yoyo-tar</module>
+  </modules>
+</project>

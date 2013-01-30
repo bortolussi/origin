@@ -1,0 +1,1 @@
+echo "this could be an install script for the application"

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- entityManagerFactory initialisation -->
+	<bean id="yoyoEntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceProviderClass">
+			<value>org.hibernate.ejb.HibernatePersistence</value>
+		</property>
+		<!-- WARNING : Your persistence file should NOT be "META-INF/persistence.xml" file as requested by the specification,
+			otherwise it will be scanned and loaded by JPA container implementation (Jonas or Weblogic) before application deployment, 
+			generating various errors.  -->
+		<!-- The file is located within the persistence jar file, here the yoyo-model module. Database name is choosen with
+			Spring's configuration service (see applicationPropertiesContext.xml)-->
+		<property name="persistenceXmlLocation">
+			<value>classpath:META-INF/persistence-${database.name}.xml</value>
+		</property>
+	</bean>
+
+	<!-- inject an EntityManager in subclasses of GenericDao, which includes @PersistenceContext annotation -->
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- convert database exception to Spring DataAccessException for every class with @Repository annotation -->
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<!-- Market DAO -->
+	<bean id="marketDao"
+		class="com.francetelecom.yoyo.dao.impl.MarketDaoJpaImpl" />
+
+	<!-- Expose Hibernate statistics on JMX - To be removed on production environment -->
+	<bean id="hibernateSessionFactory" factory-bean="yoyoEntityManagerFactory" factory-method="getSessionFactory" />
+	<bean id="hibernateStatistics" class="org.hibernate.jmx.StatisticsService">
+		<property name="statisticsEnabled" value="true" />
+		<property name="sessionFactory" ref="hibernateSessionFactory" />
+	</bean>
+	<bean class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+		<property name="beans">
+			<map>
+				<entry key="Hibernate:name=yoyo-statistics" value-ref="hibernateStatistics" />
+			</map>
+		</property>
+	</bean>
+
+</beans>

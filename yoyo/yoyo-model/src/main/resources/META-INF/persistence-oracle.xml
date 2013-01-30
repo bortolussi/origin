@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+   http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<!-- transaction-type is RESOURCE_LOCAL or JTA -->
+	<persistence-unit name="yoyoPersistenceUnit"	transaction-type="JTA">
+		<jta-data-source>jdbc/yoyoDataSource</jta-data-source>
+
+		<!-- configuration specific to a database is kept outside java code and annotations. 
+		Here, we configure key generations :
+		oracle sequences, mysql, postgresql and hsqldb autoincrement -->
+		<mapping-file>orm_oracle_sequence.xml</mapping-file>
+
+		<class>com.francetelecom.yoyo.model.persistent.Market</class>
+
+		<!-- Avoid to scan *.class and *.hbm.xml -->
+		<exclude-unlisted-classes />
+		
+		<!-- TODO : change this value if using second level caching -->
+		<shared-cache-mode>NONE</shared-cache-mode>
+		
+		<!-- Bean validation is deactivated by default -->
+		<validation-mode>NONE</validation-mode>
+
+		<!-- hibernate provider configuration -->
+		<!-- see http://docs.jboss.org/hibernate/core/3.6/reference/en-US/html/session-configuration.html -->
+		<properties>
+			<property name="hibernate.transaction.manager_lookup_class"	value="org.hibernate.transaction.JOTMTransactionManagerLookup" />
+			<!--  replace with correct database dialect -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+			<!-- set to 'true' if using second level caching -->
+			<property name="hibernate.cache.use_second_level_cache"	value="false" />
+				<!-- TODO : uncomment if using second level caching -->
+<!--			<property name="hibernate.cache.region.factory_class" -->
+<!--				value="net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory"/>-->
+			<property name="hibernate.connection.release_mode" value="auto" />
+			
+			<!-- development configuration - switch to false in production mode -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<!-- See jpaDaoContext.xml for exposing statistics on JMX -->
+			<property name="hibernate.generate_statistics" value="true" />
+			
+		</properties>
+
+	</persistence-unit>
+
+</persistence>

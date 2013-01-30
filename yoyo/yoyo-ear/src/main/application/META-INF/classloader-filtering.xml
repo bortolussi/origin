@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-loader-filtering xmlns="http://org.ow2.jonas.lib.loader.mapping">
+
+  <!--
+    List of filters used to exclude packages/resources that are used
+    internally by the application.
+  -->
+  <default-filters>
+
+	<!-- Use provided JPA 2.0 API -->
+	<filter-name>javax.persistence.*</filter-name>
+
+	<!-- solve this exception :
+	Caused by: org.hibernate.AnnotationException: java.lang.NoSuchMethodException: org.hibernate.validator.ClassValidator.<init>(java.lang.Class, java.util.ResourceBundle, org.hibernate.validator.MessageInterpolator, java.util.Map, org.hibernate.annotations.common.reflection.ReflectionManager)
+        at org.hibernate.cfg.AnnotationConfiguration.applyHibernateValidatorLegacyConstraintsOnDDL(AnnotationConfiguration.java:455)
+	 -->
+	<filter-name>org.hibernate.*</filter-name>
+	
+	<!-- Use provided Spring -->
+	<filter-name>org.springframework.*</filter-name>
+
+	<!-- filter for slf4j to force local slf4j->logback configuration (otherwise, the slf4j->monolog configuration from jonas is used)  -->
+	<filter-name>org.slf4j.*</filter-name>
+	
+	<!-- filter for commons logging (JCL) to avoid StackOverflowError caused by recursive calls between JCL bridge in war and JCL implementation in Jonas -->		
+	<filter-name>org.apache.commons.logging.*</filter-name>   
+	 
+  </default-filters>
+</class-loader-filtering>

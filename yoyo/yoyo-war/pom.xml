@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.francetelecom.yoyo</groupId>
+		<artifactId>yoyo</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>yoyo-war</artifactId>
+	<packaging>war</packaging>
+	<name>${project.artifactId}(${project.packaging})</name>
+
+	<properties>
+		<!-- used by hosted mode to link the GWT source code -->
+		<provider-gwt-module>${project.parent.artifactId}-provider-gwt</provider-gwt-module>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-technicalservice</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-model</artifactId>
+		</dependency>
+		<!-- used by GWT to generate javascript client code -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-model</artifactId>
+			<type>java-source</type>
+		</dependency>
+		<!-- contains source code -> TO FIX -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-provider-gwt</artifactId>
+			<type>jar</type>
+		</dependency>
+		<!-- TODO : used by GWT to generate javascript client code -->
+		<!-- dependency> <groupId>${project.groupId}</groupId> <artifactId>myappli-provider-gwt</artifactId> 
+			<type>java-source</type> </dependency -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-application</artifactId>
+		</dependency>
+		<!-- used by GWT to generate javascript client code -->
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-application</artifactId>
+			<type>java-source</type>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-business</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>yoyo-consumer-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<!-- Spring 2.5.x -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+		</dependency>
+
+		<!-- log dependencies -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<configuration>
+					<runTarget>index.html</runTarget>
+					<!-- exploded war directory used by hosted mode. This directory will 
+						be generated when using gwt:run goal + hosted profile -->
+					<!-- uses jetty as web default container -->
+					<hostedWebapp>${project.build.directory}/hosted/${project.build.finalName}</hostedWebapp>
+					<modules>
+						<module>${project.groupId}.presentation.GwtApplication</module>
+					</modules>
+				</configuration>
+				<executions>
+					<execution>
+						<id>gwtcompile</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>src/main/webapp</directory>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+
+		<!-- hosted mode profile -->
+		<!-- enables to set up an hosted mode environment (jetty) to run our gwt 
+			application -->
+		<profile>
+			<id>hosted</id>
+			<activation>
+			</activation>
+
+			<dependencies>
+				<!-- Hosted mode specific dependencies -->
+				<dependency>
+					<groupId>hsqldb</groupId>
+					<artifactId>hsqldb</artifactId>
+					<version>1.8.0.1</version>
+				</dependency>
+			</dependencies>
+			<build>
+
+				<plugins>
+					<!-- create expanded WAR directory for hosted mode -->
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<!-- duplicates existing war directory -->
+							<execution>
+								<id>copy-webapp-resources-hosted</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/hosted/${project.build.finalName}</outputDirectory>
+									<overwrite>false</overwrite>
+									<resources>
+										<resource>
+											<directory>${project.build.directory}/${project.build.finalName}</directory>
+											<filtering>true</filtering>
+											<!--we don't need JTA specific configuration because jetty doesn't support it-->
+											<excludes>
+												<exclude>**/jpaDaoContext.xml</exclude>
+												<exclude>**/transactionContext.xml</exclude>
+											</excludes>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<!-- set custom spring configuration and JPA persistence files because jetty (used by default in hosted mode) doesn't support JTA -->
+							<execution>
+								<id>copy-custom-resources-hosted</id>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/hosted/${project.build.finalName}</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/hosted</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- How to run GWT in HOSTED Mode using extra sources folders http://mojo.codehaus.org/gwt-maven-plugin/user-guide/productivity.html -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>1.4</version>
+						<executions>
+							<execution>
+								<id>add-source</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>add-source</goal>
+								</goals>
+								<configuration>
+									<sources>
+										<!-- GWT source folder declaration -->
+										<source>../${provider-gwt-module}/src/main/java</source>
+									</sources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>add-resource</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>add-resource</goal>
+								</goals>
+								<configuration>
+									<resources>
+										<resource>
+											<directory>../${provider-gwt-module}/src/main/resources</directory>
+											<targetPath>resources</targetPath>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

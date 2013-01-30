@@ -1,0 +1,36 @@
+<assembly>
+	<id>makePL</id>
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<dependencySets>
+		<dependencySet>
+			<includes>
+				<!-- Include application (ear file) -->
+				<include>com.francetelecom.yoyo:yoyo-ear</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+	<fileSets>
+		<fileSet>
+			<!-- Include dynamically generated signature files at the root of the tar -->
+			<fileMode>0640</fileMode>
+			<filtered>true</filtered>
+			<directory>${basedir}/src/main/resources</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>*.SIG</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+				<!-- Include all *.ksh files in directory sh  -->
+				<lineEnding>unix</lineEnding>
+				<directory>${basedir}/src/main/resources/sh</directory>
+				<outputDirectory>sh</outputDirectory>
+				<includes>
+						<include>*.ksh</include>
+				</includes>
+		</fileSet>
+	</fileSets>
+</assembly>

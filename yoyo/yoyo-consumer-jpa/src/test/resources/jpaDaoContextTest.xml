@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- entityManagerFactory initialisation -->
+	<bean id="yoyoEntityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceProviderClass">
+			<value>org.hibernate.ejb.HibernatePersistence</value>
+		</property>
+		<property name="persistenceUnitName">
+			<value>yoyoPersistenceUnitTest</value>
+		</property>
+		
+		<property name="persistenceXmlLocation">
+			<value>classpath*:META-INF/persistence-test-hsqldb.xml</value>
+		</property>
+	</bean>
+
+	<!-- inject an EntityManager in subclasses of GenericDao, which includes 
+		@PersistenceContext annotation -->
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<!-- convert database exception to Spring DataAccessException for every class with 
+		@Repository annotation -->
+
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<!-- Market DAO -->
+	<bean id="marketDao"
+		class="com.francetelecom.yoyo.dao.impl.MarketDaoJpaImpl" />
+
+</beans>

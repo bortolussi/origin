@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+	<display-name>yoyo-ihm</display-name>
+
+	<!-- Spring param -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring-config/applicationContext.xml</param-value>
+	</context-param>
+
+
+	<!-- Security & IP param -->
+	<context-param>
+		<param-name>security-config</param-name>
+		<param-value>/WEB-INF/security-config/security-config.xml</param-value>
+	</context-param>
+
+	<!-- *************FILTER************** -->
+
+	<!-- IP Filter -->
+	<filter>
+		<filter-name>ip.filter</filter-name>
+		<filter-class>com.francetelecom.clara.security.filter.IpFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>ip.filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- Security filter -->
+	<filter>
+		<filter-name>security.filter</filter-name>
+		<filter-class>com.francetelecom.clara.security.filter.SecurityFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>security.filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>manageMarketServlet</servlet-name>
+		<servlet-class>com.francetelecom.yoyo.presentation.server.ManageMarketDelegate</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>manageMarketServlet</servlet-name>
+		<url-pattern>/com.francetelecom.yoyo.presentation.GwtApplication/manageMarket</url-pattern>
+	</servlet-mapping>
+
+	<!-- *************LISTENER************** -->
+
+	<!-- Spring start context Listener -->
+	<listener>
+		<display-name>spring context loader</display-name>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- The Welcome File List -->
+	<welcome-file-list>
+		<welcome-file>gassi/pages/index.jsp</welcome-file>
+	</welcome-file-list>
+
+
+</web-app>

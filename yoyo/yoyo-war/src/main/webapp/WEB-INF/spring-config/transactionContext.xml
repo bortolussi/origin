@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Transaction manager configuration -->
+	<bean id="transactionManager"
+		class="org.springframework.transaction.jta.JtaTransactionManager">
+	</bean>
+	
+	<!-- Definition du transaction interceptor -->
+	<bean id="transactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributes" />
+		</property>
+	</bean>
+
+	<!-- define transactional CRUD methods -->
+	<bean id="transactionAttributes"
+		class="org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource">
+		<property name="properties">
+			<value>
+				create*=ISOLATION_DEFAULT,PROPAGATION_REQUIRED,-TechnicalException,-FunctionalException
+				read*=ISOLATION_DEFAULT,PROPAGATION_REQUIRED
+				update*=ISOLATION_DEFAULT,PROPAGATION_REQUIRED,-TechnicalException,-FunctionalException
+				delete*=ISOLATION_DEFAULT,PROPAGATION_REQUIRED,-TechnicalException,-FunctionalException
+				consult*=ISOLATION_DEFAULT,PROPAGATION_REQUIRED
+				modify*=ISOLATION_DEFAULT,PROPAGATION_REQUIRED,-TechnicalException,-FunctionalException
+			</value>
+		</property>
+	</bean>
+
+	<!-- Défine transactional beans, in the application layer -->
+	<bean id="autoProxyTransactionCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="interceptorNames">
+			<list>
+				<value>transactionInterceptor</value>
+			</list>
+		</property>
+		<property name="beanNames">
+			<list>
+				<value>manage*Application</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	
+	<!-- application layer -->
+	<bean id="manageMarketApplication"
+		class="com.francetelecom.yoyo.application.impl.ManageMarketImpl" 
+		scope="singleton" >
+		<property name="manageMarketBusiness">
+			<ref bean="manageMarketBusiness"/>
+		</property>
+	</bean>
+
+	<!-- business layer -->
+	<bean id="manageMarketBusiness" 
+		class="com.francetelecom.yoyo.business.impl.ManageMarketBusinessImpl">
+		<property name="marketDao">
+			<ref bean="marketDao"/>
+		</property>
+	</bean>
+
+</beans>

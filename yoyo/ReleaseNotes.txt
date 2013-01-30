@@ -1,0 +1,53 @@
+------------------------------------
+----- orange-archetype-gwt-jpa -----
+------------------------------------
+
+This project has been generated from :
+- Archetype : orange-archetype-gwt-jpa
+- Version : 1.2.0
+- Creation : October 2012
+
+Release 1.2.0
+-------------
+- Security framework upgraded to version 3.1.0 (instead of 3.0.0) to correct a wicket ajax request problem on session timeout
+- Do not share cargo configuration in parent pom
+- Add JMX mBean for Hibernate statistics
+- Replace yourdev with orangeforge
+- Provide hsql, mysql, oracle and postgresql database configuration
+- Change from one database to another with a single property
+- Add an sql module with sql scripts
+
+Release 1.1.0
+-------------
+Bug fixed :
+- FunctionalException inherits now from Exception (instead of RuntimeException)
+
+Versions upgrades :
+- Full Jonas 5.1 and 5.2 support with JDK 1.6, Jonas 4 support removed
+- Spring dependencies :
+	- Spring 3.1.0.RELEASE is the new recommended version (instead of 2.5.6)
+- Hibernate/JPA dependencies : 
+	- JPA API : hibernate-jpa-2.0-api 1.0.0.Final (instead of geronimo-jpa_3.0_spec 1.1)
+	- hibernate-entitymanager 3.6.0.Final (instead of 3.4.0.GA)
+	- hibernate-validator 4.1.0.Final (instead of 3.1.0.GA)
+	- ehcache-core 2.4.0 added
+- Validation API dependency (JSR 303) : validation-api 1.0.0.GA added
+- Junit : Junit 4.5 (instead of 4.4)
+- Logs dependencies : 
+	- slf4j API 1.6.4
+	- LogBack implementation 1.0.0 (instead of log4j 1.2.14)
+- Maven plugin : all maven plugins have been upgraded to latest version
+- Maven 3 : update pom files to remove maven 3 warnings, use pom-corporate version 3.0
+
+Other enhancements :
+- add m2e eclipse configuration in pom.xml files, for Eclipse 3.7 Indigo, available in S7D1 platform
+- all modules version and groupId tags removed (inherited from parent pom.xml)
+- jonas-web.xml : delegation-model set to true (default behavior, this file is deprecated with Jonas 5.2, use classloader-filtering instead)
+- classloader-filtering.xml added to replace jonas-web.xml file
+- remove ear classifier, because this generates continuous integration problems. Preferred way is to use properties file in JONAS_BASE/conf
+
+
+Release 1.0.0
+-------------
+- Initial revision
+

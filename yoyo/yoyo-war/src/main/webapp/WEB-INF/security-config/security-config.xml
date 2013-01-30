@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<security-config xmlns="http://com.francetelecom.clara.security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://com.francetelecom.clara.security security-config.xsd">
+
+	<!-- Agent configuration -->
+	<agent class="com.francetelecom.clara.security.local.LocalAgent">
+		<!-- Comment to disable local authorization: -->
+		<set-property property="accessFilename"
+			value="/WEB-INF/security-config/access.xml" />
+
+		<!-- Comment to disable stub authentication mode: -->
+		<set-property property="usersFilename"
+			value="/WEB-INF/security-config/users.xml" />
+	</agent>
+
+	<!-- Users management rules -->
+	<users>
+		<!-- <required-property name="ftname"/>	-->
+	</users>
+
+	<!-- Auditers -->
+	<auditers>
+		<auditer
+			class="com.francetelecom.clara.security.util.LogSecurityAuditer" />
+	</auditers>
+
+<!-- 
+	<ipFilter>
+		<allowedIP pattern="127.0.0.1" />
+		<allowedIP pattern="10.*.*.*" />
+	</ipFilter>
+ -->
+ 
+	<ipFilter>
+	</ipFilter>
+
+	<!-- Web-application configuration -->
+	<web-app login="/gassi/pages/login.jsp"
+		badLoginMessage="Authentication failed. Please try again"
+		protectActions="true">
+		<entry-points>
+			<entry-point path="/index.html" forward="not used" />
+		</entry-points>
+		<error-forwards authentication="/gassi/pages/error.jsp"
+			authorization="/gassi/pages/error.jsp"
+			failure="/gassi/pages/error.jsp"
+			notAnEntryPoint="/gassi/pages/notAnEntryPoint.jsp" />
+
+		<!-- Authentification not required for these pages -->
+		<exit-points>
+			<exit-point path="/" />
+			<exit-point path="/gassi/pages/login.jsp" />
+			<exit-point path="/gassi/pages/logoff.jsp" />
+		</exit-points>
+
+		<ignored-extentions>
+			<ignored-extention extention="css" />
+			<ignored-extention extention="js" />
+			<ignored-extention extention="gif" />
+			<ignored-extention extention="jpg" />
+			<ignored-extention extention="png" />
+			<ignored-extention extention="ico" />
+		</ignored-extentions>
+	</web-app>
+
+</security-config>

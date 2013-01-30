@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Specific logback-test.xml configuration for unit tests --> 
+<!-- overrides default configuration in logback.xml -->
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <Target>System.out</Target>
+    <encoder>
+      <pattern>%date{ISO8601} %-5level [%thread] %logger{30}\(%line\) - %message%n</pattern>
+    </encoder>
+  </appender>
+  <logger name="com.francetelecom.yoyo" level="DEBUG"/>
+  <root level="INFO">
+    <appender-ref ref="stdout"/>
+  </root>
+</configuration>
