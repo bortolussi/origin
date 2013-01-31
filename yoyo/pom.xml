@@ -10,7 +10,7 @@
 
 	<groupId>com.francetelecom.yoyo</groupId>
 	<artifactId>yoyo</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>integration-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}(${project.packaging})</name>
 	<url>http://${project.artifactId}.orangeforge.rd.francetelecom.fr/website/${project.artifactId}-${project.version}</url>
@@ -555,7 +555,7 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore/>
+										<ignore />
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
